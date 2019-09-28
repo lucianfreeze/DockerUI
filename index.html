@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <title>DockerUI</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
     <script src="./main.js"></script>
 </head>
 
 <body>
-    <h1>DockerUI</h1>
-    <p>This is a test paragraph lorem ipsum dolorem.</p>
-    <p>This is another test paragraph lorem ipsum dolorem.</p>
-    <button onclick="getContainerNames()">getContainerNames()</button>
-    <button onclick="getContainerIds()">getContainerIds()</button>
-    <button onclick="testData()">DOES NOTHING</button>
+    <div id="header">
+        <button class="button" id="menu-btn">MenuYeet</button>
+    </div>
+
+    <div class="content">
+        <ul>
+            <li>
+                <div>
+                    <table>
+                        <tr>
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Status</td>
+                            <td>Running Ps</td>
+                            <td>Options</td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
     <script src="./docker.js"></script>
 </body>
 
