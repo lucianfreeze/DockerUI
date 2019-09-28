@@ -1,0 +1,19 @@
+* {
+    font-family: sans-serif;
+    background: Black;
+    color: lightsteelblue;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    font-size: 20px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+a {
+    color: chartreuse;
+}
