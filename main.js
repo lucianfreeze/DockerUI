@@ -46,8 +46,33 @@ function getContainerFromName() {
 
 function getContainerId() {
   docker.listContainers(function (err, containers) {
-    console.log(containers[1].Id);
+     console.log(containers[0].Id);
+     here = containers[0].Id;
   });
+  console.log(here);
+}
+
+function containerStartStop(conNum) {
+  docker.listContainers(function (err, containers) {
+    var con = docker.getContainer(containers[conNum].Id);
+    con.inspect(function (err, data) {
+      console.log(data.State.Status);
+    });
+  });
+  /*
+
+  var container = docker.getContainer(conId);
+  console.log(conId);
+  console.log(container);
+  //container.inspect(function (err,data) {
+  //  console.log(data);
+  //});
+  */
+}
+
+function testData() {
+  var test = getContainerId();
+  containerStartStop(0);
 }
 
 // This method will be called when Electron has finished
