@@ -2,7 +2,9 @@ const {
   app,
   BrowserWindow
 } = require('electron')
+
 var Docker = require('dockerode');
+
 var docker = new Docker({
   host: '127.0.0.1',
   port: 2375
@@ -42,9 +44,9 @@ function getContainerFromName() {
   console.log(docker.getContainers());
 }
 
-function getContainerNames() {
+function getContainerId() {
   docker.listContainers(function (err, containers) {
-    console.log(containers[0]);
+    console.log(containers[1].Id);
   });
 }
 
