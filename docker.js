@@ -5,46 +5,23 @@ var docker = new Docker({
   port: 2375
 });
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let win
-
-function createWindow() {
-  // Create the browser window.
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
-
-  // and load the index.html of the app.
-  win.loadFile('index.html')
-
-  // Open the DevTools.
-  win.webContents.openDevTools()
-
-
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null
-  })
-}
-
-function getContainerFromName() {
-  console.log(docker.getContainers());
-}
-
-function getContainerId() {
-  let here = "dd"
+function getContainerIds() {
+  var cnts = [];
   docker.listContainers(function (err, containers) {
-     here = containers[0].Id;
+    containers.forEach(function(err, cntrInfo) {
+      cnts.push(containers[cntrInfo].Id);
+    })
   });
-  console.log(here);
+  console.log(cnts)
+  return cnts;
+}
+
+function getContainerNames() {
+  docker.listContainers(function (err, containers) {
+    containers.forEach(function(err, cntrInfo) {
+      console.log(containers[cntrInfo].Names[0]);
+    })
+  });
 }
 
 function containerStartStop(conNum) {
@@ -66,6 +43,6 @@ function containerStartStop(conNum) {
 }
 
 function testData() {
-  var test = getContainerId();
+  var test = getContainerIds();
   containerStartStop(0);
 }
