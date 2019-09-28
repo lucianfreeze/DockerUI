@@ -3,13 +3,6 @@ const {
   BrowserWindow
 } = require('electron')
 
-var Docker = require('dockerode');
-
-var docker = new Docker({
-  host: '127.0.0.1',
-  port: 2375
-});
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -40,40 +33,6 @@ function createWindow() {
   })
 }
 
-function getContainerFromName() {
-  console.log(docker.getContainers());
-}
-
-function getContainerId() {
-  docker.listContainers(function (err, containers) {
-     console.log(containers[0].Id);
-     here = containers[0].Id;
-  });
-  console.log(here);
-}
-
-function containerStartStop(conNum) {
-  docker.listContainers(function (err, containers) {
-    var con = docker.getContainer(containers[conNum].Id);
-    con.inspect(function (err, data) {
-      console.log(data.State.Status);
-    });
-  });
-  /*
-
-  var container = docker.getContainer(conId);
-  console.log(conId);
-  console.log(container);
-  //container.inspect(function (err,data) {
-  //  console.log(data);
-  //});
-  */
-}
-
-function testData() {
-  var test = getContainerId();
-  containerStartStop(0);
-}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
