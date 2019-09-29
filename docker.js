@@ -141,3 +141,23 @@ function containerDestroy(IdName) {
         }
     })
 }
+
+/**
+ * Creates a Container in Docker with specific options
+ * //for now only a static alpine container
+ * 
+ * 
+ */
+function createContainer() {
+  var nextContainer;
+  docker.createContainer({
+    Image: 'alpine:latest',
+    Names: 'TestButtoner',
+    Tty: true,
+    Cmd: ['/bin/sh', '-c', 'echo "Hello from Docker Alphine"'],
+    }, function(err, container) {
+      nextContainer = container;
+      return nextContainer.start();
+    }
+  );
+}
