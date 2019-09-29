@@ -8,10 +8,33 @@
  * @requires NPM:node_modules
  * 
  */
+
+/**
+ * main importation of dockerode
+ * @type {Dockerode}
+ */
 var Docker = require('dockerode');
+
+/**
+ * jQuery importation for main window
+ * @constant
+ * 
+ * @type {globalThis}
+ */
 window.$ = window.jQuery = require('jquery');
+
+/**
+ * main container information list of program
+ * @type {List<ContainerInfor>}
+ */
 var containerList;
 
+/**
+ * The main dockerode connection.
+ * @constant
+ * 
+ * @type {Dockerode}
+ */
 var docker = new Docker({
   host: '127.0.0.1',
   port: 2375
@@ -39,6 +62,11 @@ $(function () {
 
 })
 
+/**
+ * Acquire number of items in container-list
+ * 
+ * @returns {number}
+ */
 function getItemNum() {
   return $("#container-list").length;
 }
