@@ -15,6 +15,9 @@ function getContainerIds() {
   })
 }
 
+//id, Name, Status, Running Processes, image
+
+
 function getContainerNames() {
   docker.listContainers(function (err, containers) {
     containers.forEach(function(err, cntrIdx) {
