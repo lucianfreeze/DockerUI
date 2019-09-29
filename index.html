@@ -10,91 +10,28 @@
 
 <body>
     <div id="header">
-        <button class="button" id="menu-btn">MenuYeet</button>
+        <button class="button" id="menu-btn" onclick="getContainerIds()">MenuYeet</button>
     </div>
 
     <div class="content">
-        <ul>
-            <li>
+        <ul id="container-list">
+            <li id="list-header">
                 <div>
                     <table>
                         <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <table>
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <table>
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <table>
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <table>
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <table>
-                        <tr>
-                            <td>ID</td>
-                            <td>Name</td>
-                            <td>Status</td>
-                            <td>Running Ps</td>
-                            <td>Options</td>
+                            <td class="id">ID</td>
+                            <td class="name">Name</td>
+                            <td class="status">Status</td>
+                            <td class="state">State</td>
+                            <td class="cmd">Command</td>
+                            <td class="options">Options</td>
                         </tr>
                     </table>
                 </div>
             </li>
         </ul>
     </div>
+    <script src="./docker.js"></script>
 </body>
 
 </html>

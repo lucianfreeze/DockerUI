@@ -10,7 +10,7 @@ body,
   padding: 0;
   background-color: #2496ed;
   font-family: 'Coves', sans-serif;
-  font-size: 25px;
+  font-size: 18px;
 }
 
 .button {
@@ -40,17 +40,20 @@ body,
 }
 
 .content ul li div table {
-  position: relative;
   width: 100%;
+  table-layout: fixed;
   -webkit-box-shadow: 5px 5px 4px #51697c;
           box-shadow: 5px 5px 4px #51697c;
   background-color: white;
+  min-width: 800px;
 }
 
 .content ul li div table tr td {
   background-color: white;
   border-right: 1px solid black;
-  padding: 10px 15px;
+  padding: 8px;
   text-align: center;
+  word-wrap: break-word;
+  min-width: 1500px;
 }
 /*# sourceMappingURL=main.css.map */
