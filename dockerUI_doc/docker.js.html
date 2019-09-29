@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: docker.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: docker.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview The file that holds all the Dockerode Node module
  * and functionality to the electron application
  * @author Lucian Freeze
@@ -25,7 +53,7 @@ window.$ = window.jQuery = require('jquery');
 
 /**
  * main container information list of program
- * @type {List<ContainerInfo>}
+ * @type {List&lt;ContainerInfo>}
  */
 var containerList;
 var containerIDs = [];
@@ -45,26 +73,24 @@ $(function () {
   getContainerIds();
   setTimeout(() => {
     if (!containerList) {
-      $("body").html("<h1 class='error'>No Containers</h1>");
-      console.log("no containers");
-    } else {
-      containerList.forEach(function (container) {
+      $("body").html("&lt;h1 class='error'>No Containers&lt;/h1>");
+    }
+    else {
+      containerList.forEach(function(container){
         containerIDs.push(container.Id);
         console.log(containerIDs);
-        $newItem = $(".template").clone().attr("id", "item-" + getItemNum() - 1).attr("class", "list-item");
-        $newItem.find(".id").text(container.Id.slice(0, 12));
+        $newItem = $(".template").clone().attr("id","item-"+getItemNum()-1).attr("class","list-item");
+        $newItem.find(".id").text(container.Id.slice(0,12));
         $newItem.find(".name").text(container.Names[0]);
         $newItem.find(".status").text(container.Status);
         $newItem.find(".state").text(container.State);
         $newItem.find(".cmd").text(container.Command);
         $newItem.find(".run-stop-toggle").attr("id", container.Id).attr("class", "run-stop-on").text("Run");
-        $newItem.find(".delete").attr("id", container.Id);
 
         $("#container-list").append($newItem);
       })
-      console.log("containers!");
     }
-  }, 500);
+  }, 100);
 
 })
 
@@ -83,9 +109,7 @@ function getItemNum() {
  * 
  */
 function getContainerIds() {
-  docker.listContainers({
-    "all": "true"
-  }, function (err, containers) {
+  docker.listContainers({"all":"true"}, function (err, containers) {
     containerList = containers;
     console.log(containerList);
   })
@@ -119,22 +143,13 @@ function getContainerNames() {
  * @param {string} IdName The ID of the Container chosen
  */
 function containerStartStop(IdName) {
-  let container = docker.getContainer(IdName);
-  container.inspect(function (err, data) {
-    console.log(data.State.Status);
-    if (data.State.Running) {
-      container.stop();
-      $("#"+IdName).removeClass("run-stop-on");
-      $("#"+IdName).addClass("run-stop-off");
-    } else {
-      container.start();
-      $("#"+IdName).removeClass("run-stop-off");
-      $("#"+IdName).addClass("run-stop-on");
-    }
-  });
+    let container = docker.getContainer(IdName);
+    container.inspect(function (err, data) {
+        console.log(data.State.Status);
+        if (data.State.Running) { container.stop(); }
+      else { container.start(); }
+    });
 }
-
-
 
 /**
  * Kills a specifed Container, by ID, if running and then
@@ -143,39 +158,20 @@ function containerStartStop(IdName) {
  * @param {string} IdName
  */
 function containerDestroy(IdName) {
-  if (confirm("Are you sure you want to destroy this container? You cannot get it back!")) {
     let container = docker.getContainer(IdName);
     container.inspect(function (err, data) {
-      if (data.State.Running) {
-        container.kill(function (err) {
-          container.remove(function (err) {
+        if (data.State.Running) { 
+            container.kill(function (err) {
+                container.remove(function (err) {
+                    console.log('container removed');
+                });
+            }); 
+        }
+        else { container.remove(function (err) {
             console.log('container removed');
-          });
-        });
-      } else {
-        container.remove(function (err) {
-          console.log('container removed');
-        });
-      }
+            }); 
+        }
     })
-    $("#" + IdName).closest("li").remove();
-  } else {
-    alert("This container will not be deleted.");
-  }
-}
-
-function addNewContainer(container) {
-  console.log(container.Id);
-  $newItem = $(".template").clone().attr("id", "item-" + getItemNum() - 1).attr("class", "list-item");
-  $newItem.find(".id").text(container.Id.slice(0, 12));
-  $newItem.find(".name").text(container.Names[0]);
-  $newItem.find(".status").text(container.Status);
-  $newItem.find(".state").text(container.State);
-  $newItem.find(".cmd").text(container.Command);
-  $newItem.find(".run-stop-toggle").attr("id", container.Id).attr("class", "run-stop-on").text("Run");
-  $newItem.find(".delete").attr("id", container.Id);
-
-  $("#container-list").append($newItem);
 }
 
 /**
@@ -184,26 +180,38 @@ function addNewContainer(container) {
  * 
  * 
  */
-function createContainer(imageName) {
-  $imageName = $("#new-image-name").val();
+function createContainer() {
   var nextContainer;
   docker.createContainer({
-    Image: $imageName,
+    Image: 'alpine:latest',
     Tty: true,
-    AttachStdin: true,
-    Cmd: ['/bin/sh']
-  }, function (err, container) {
-    nextContainer = container;
-    return nextContainer.start();
-  });
-  $("#new-container-prompt").addClass("hidden");
-  $("#new-image-name").val("");
-  location.reload();
+    Cmd: ['/bin/sh', '-c', 'echo "Hello from Docker Alphine"'],
+    }, function(err, container) {
+      nextContainer = container;
+      return nextContainer.start();
+    }
+  );
 }
+</code></pre>
+        </article>
+    </section>
 
 
-var $addbtn = $("#add-btn")
 
-$addbtn.on('click', function () {
-  $("#new-container-prompt").removeClass("hidden");
-})
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#containerDestroy">containerDestroy</a></li><li><a href="global.html#containerList">containerList</a></li><li><a href="global.html#containerStartStop">containerStartStop</a></li><li><a href="global.html#createContainer">createContainer</a></li><li><a href="global.html#docker">docker</a></li><li><a href="global.html#Docker">Docker</a></li><li><a href="global.html#getContainerIds">getContainerIds</a></li><li><a href="global.html#getContainerNames">getContainerNames</a></li><li><a href="global.html#getItemNum">getItemNum</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Sep 29 2019 05:03:37 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
