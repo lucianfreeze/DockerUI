@@ -15,8 +15,16 @@ function getContainerIds() {
   })
 }
 
-//id, Name, Status, Running Processes, image
+//id        = containerList[0].Id       /123eidhf3i2k2h2
+//Name      = containerList[0].Names[0] /Tester1
+//State     = containerList[0].State    /running
+//Status    = containerList[0].Status   /Up 2 minutes
+//Command   = containerList[0].Command  /"/bin/sh"
+//image     = containerList[0].Image    /alpine:lastest
 
+function getContainerName(Idstr) {
+
+}
 
 function getContainerNames() {
   docker.listContainers(function (err, containers) {
