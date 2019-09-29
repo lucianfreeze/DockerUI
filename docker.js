@@ -152,7 +152,6 @@ function createContainer() {
   var nextContainer;
   docker.createContainer({
     Image: 'alpine:latest',
-    Names: 'TestButtoner',
     Tty: true,
     Cmd: ['/bin/sh', '-c', 'echo "Hello from Docker Alphine"'],
     }, function(err, container) {
