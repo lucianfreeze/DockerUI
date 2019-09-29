@@ -3,13 +3,6 @@ const {
   BrowserWindow
 } = require('electron')
 
-var Docker = require('dockerode');
-
-var docker = new Docker({
-  host: '127.0.0.1',
-  port: 2375
-});
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -17,8 +10,8 @@ let win
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 800,
+    height: 600,
     webPreferences: {
       nodeIntegration: true
     }
@@ -37,9 +30,9 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null
-    app.quit()
   })
 }
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -62,5 +55,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
