@@ -54,6 +54,35 @@ body,
         font-size: 4em;
     }
 }
+
+#new-container-prompt {
+    height: 200px;
+    width: 500px;
+    position: absolute;
+    background-color: #51697c;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    input[type="text"] {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        color:white;
+        border: none;
+        transform: translate(-50%, -50%);
+    }
+
+    button {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        font-size: 1em;
+        padding: 3px 5px;
+        transform: translate(-50%, 0);
+    }
+}
+
 .template {
     display: none;
 }
@@ -71,6 +100,10 @@ body,
     display: inline-block;
 }
 
+.hidden {
+    display: none;
+}
+
 .run-stop-on {
     background-color: rgba(0, 128, 0, 0.678);
     border-radius: 24px;
@@ -78,7 +111,9 @@ body,
 }
 
 .run-stop-off {
-
+    background-color: rgba(255, 0, 0, 0.678);
+    border-radius: 24px;
+    padding: 1em 2em;
 }
 
 .delete {

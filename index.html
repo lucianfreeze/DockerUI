@@ -10,7 +10,7 @@
 
 <body>
     <div id="header">
-        <button class="button" id="add-btn">Add+</button>
+        <button class="button" id="add-btn">Add +</button>
         <h1>DockerUI</h1>
     </div>
 
@@ -40,14 +40,19 @@
                             <td class="state">State</td>
                             <td class="cmd">Command</td>
                             <td class="options">
-                                <button class="run-stop-toggle" id=""></button>
-                                <button class="delete" id="">Remove</button>
+                                <button class="run-stop-toggle" id="" onclick="containerStartStop(this.id)"></button>
+                                <button class="delete" id="" onclick="containerDestroy(this.id)">Remove</button>
                             </td>
                         </tr>
                     </table>
                 </div>
             </li>
         </ul>
+
+        <div class="hidden" id="new-container-prompt">
+            <input type="text" id="new-image-name" placeholder="Image Name">
+            <button onclick="createContainer('')">Submit</button>
+        </div>
     </div>
     <script src="./docker.js"></script>
 </body>

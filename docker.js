@@ -46,23 +46,25 @@ $(function () {
   setTimeout(() => {
     if (!containerList) {
       $("body").html("<h1 class='error'>No Containers</h1>");
-    }
-    else {
-      containerList.forEach(function(container){
+      console.log("no containers");
+    } else {
+      containerList.forEach(function (container) {
         containerIDs.push(container.Id);
         console.log(containerIDs);
-        $newItem = $(".template").clone().attr("id","item-"+getItemNum()-1).attr("class","list-item");
-        $newItem.find(".id").text(container.Id.slice(0,12));
+        $newItem = $(".template").clone().attr("id", "item-" + getItemNum() - 1).attr("class", "list-item");
+        $newItem.find(".id").text(container.Id.slice(0, 12));
         $newItem.find(".name").text(container.Names[0]);
         $newItem.find(".status").text(container.Status);
         $newItem.find(".state").text(container.State);
         $newItem.find(".cmd").text(container.Command);
         $newItem.find(".run-stop-toggle").attr("id", container.Id).attr("class", "run-stop-on").text("Run");
+        $newItem.find(".delete").attr("id", container.Id);
 
         $("#container-list").append($newItem);
       })
+      console.log("containers!");
     }
-  }, 100);
+  }, 500);
 
 })
 
@@ -81,7 +83,9 @@ function getItemNum() {
  * 
  */
 function getContainerIds() {
-  docker.listContainers({"all":"true"}, function (err, containers) {
+  docker.listContainers({
+    "all": "true"
+  }, function (err, containers) {
     containerList = containers;
     console.log(containerList);
   })
@@ -115,13 +119,22 @@ function getContainerNames() {
  * @param {string} IdName The ID of the Container chosen
  */
 function containerStartStop(IdName) {
-    let container = docker.getContainer(IdName);
-    container.inspect(function (err, data) {
-        console.log(data.State.Status);
-        if (data.State.Running) { container.stop(); }
-      else { container.start(); }
-    });
+  let container = docker.getContainer(IdName);
+  container.inspect(function (err, data) {
+    console.log(data.State.Status);
+    if (data.State.Running) {
+      container.stop();
+      $("#"+IdName).removeClass("run-stop-on");
+      $("#"+IdName).addClass("run-stop-off");
+    } else {
+      container.start();
+      $("#"+IdName).removeClass("run-stop-off");
+      $("#"+IdName).addClass("run-stop-on");
+    }
+  });
 }
+
+
 
 /**
  * Kills a specifed Container, by ID, if running and then
@@ -130,20 +143,39 @@ function containerStartStop(IdName) {
  * @param {*} IdName
  */
 function containerDestroy(IdName) {
+  if (confirm("Are you sure you want to destroy this container? You cannot get it back!")) {
     let container = docker.getContainer(IdName);
     container.inspect(function (err, data) {
-        if (data.State.Running) { 
-            container.kill(function (err) {
-                container.remove(function (err) {
-                    console.log('container removed');
-                });
-            }); 
-        }
-        else { container.remove(function (err) {
+      if (data.State.Running) {
+        container.kill(function (err) {
+          container.remove(function (err) {
             console.log('container removed');
-            }); 
-        }
+          });
+        });
+      } else {
+        container.remove(function (err) {
+          console.log('container removed');
+        });
+      }
     })
+    $("#" + IdName).closest("li").remove();
+  } else {
+    alert("This container will not be deleted.");
+  }
+}
+
+function addNewContainer(container) {
+  console.log(container.Id);
+  $newItem = $(".template").clone().attr("id", "item-" + getItemNum() - 1).attr("class", "list-item");
+  $newItem.find(".id").text(container.Id.slice(0, 12));
+  $newItem.find(".name").text(container.Names[0]);
+  $newItem.find(".status").text(container.Status);
+  $newItem.find(".state").text(container.State);
+  $newItem.find(".cmd").text(container.Command);
+  $newItem.find(".run-stop-toggle").attr("id", container.Id).attr("class", "run-stop-on").text("Run");
+  $newItem.find(".delete").attr("id", container.Id);
+
+  $("#container-list").append($newItem);
 }
 
 /**
@@ -152,15 +184,26 @@ function containerDestroy(IdName) {
  * 
  * 
  */
-function createContainer() {
+function createContainer(imageName) {
+  $imageName = $("#new-image-name").val();
   var nextContainer;
   docker.createContainer({
-    Image: 'alpine:latest',
+    Image: $imageName,
     Tty: true,
-    Cmd: ['/bin/sh', '-c', 'echo "Hello from Docker Alphine"'],
-    }, function(err, container) {
-      nextContainer = container;
-      return nextContainer.start();
-    }
-  );
+    AttachStdin: true,
+    Cmd: ['/bin/sh']
+  }, function (err, container) {
+    nextContainer = container;
+    return nextContainer.start();
+  });
+  $("#new-container-prompt").addClass("hidden");
+  $("#new-image-name").val("");
+  location.reload();
 }
+
+
+var $addbtn = $("#add-btn")
+
+$addbtn.on('click', function () {
+  $("#new-container-prompt").removeClass("hidden");
+})
