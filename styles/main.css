@@ -1,8 +1,16 @@
+@font-face {
+  font-family: Coves;
+  src: url("./../fonts/CovesLight.otf");
+  font-weight: normal;
+}
+
 body,
 * {
   margin: 0;
   padding: 0;
   background-color: #2496ed;
+  font-family: 'Coves', sans-serif;
+  font-size: 25px;
 }
 
 .button {
