@@ -29,13 +29,33 @@ body,
 
 #list-header div table {
     background-color: #7f8fa6;
-    margin-bottom:8px;
+    margin-bottom: 8px;
+
     tr {
         background-color: #7f8fa6 !important;
+
         td {
             background-color: #7f8fa6;
         }
     }
+}
+
+#header {
+    h1 {
+        display: inline-block;
+        position: relative;
+        left: 50%;
+        top: 15px;
+        transform: translate(-100%, 0);
+        font-family: sans-serif;
+        color: white;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 4em;
+    }
+}
+.template {
+    display: none;
 }
 
 .button {
@@ -45,6 +65,27 @@ body,
     border-radius: 20px;
     text-shadow: 2px 2px black;
     margin: 5px;
+}
+
+.run-stop-toggle {
+    display: inline-block;
+}
+
+.run-stop-on {
+    background-color: rgba(0, 128, 0, 0.678);
+    border-radius: 24px;
+    padding: 1em 2em;
+}
+
+.run-stop-off {
+
+}
+
+.delete {
+    display: inline-block;
+    background-color: #7f8fa6;
+    border-radius: 24px;
+    padding: 1em 1.15em;
 }
 
 .content {
