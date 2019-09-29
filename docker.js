@@ -8,7 +8,6 @@ var docker = new Docker({
 });
 
 function getContainerIds() {
-  var cnts = [];
   docker.listContainers(function (err, containers) {
       containerList = containers;
       console.log(containerList);
