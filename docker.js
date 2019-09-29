@@ -28,6 +28,7 @@ window.$ = window.jQuery = require('jquery');
  * @type {List<ContainerInfo>}
  */
 var containerList;
+var containerIDs = [];
 
 /**
  * The main dockerode connection.
@@ -48,6 +49,8 @@ $(function () {
     }
     else {
       containerList.forEach(function(container){
+        containerIDs.push(container.Id);
+        console.log(containerIDs);
         $newItem = $("#list-header").clone().attr("id","item-"+getItemNum());
         $newItem.find(".id").text(container.Id.slice(0,12));
         $newItem.find(".name").text(container.Names[0]);
