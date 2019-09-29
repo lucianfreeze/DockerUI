@@ -25,7 +25,7 @@ window.$ = window.jQuery = require('jquery');
 
 /**
  * main container information list of program
- * @type {List<ContainerInfor>}
+ * @type {List<ContainerInfo>}
  */
 var containerList;
 
