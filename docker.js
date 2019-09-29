@@ -50,10 +50,12 @@ $(function () {
     } else {
       containerList.forEach(function (container) {
         containerIDs.push(container.Id);
+        console.log(containerList);
         console.log(containerIDs);
         $newItem = $(".template").clone().attr("id", "item-" + getItemNum() - 1).attr("class", "list-item");
         $newItem.find(".id").text(container.Id.slice(0, 12));
         $newItem.find(".name").text(container.Names[0]);
+        $newItem.find(".image").text(container.Image);
         $newItem.find(".status").text(container.Status);
         $newItem.find(".state").text(container.State);
         $newItem.find(".cmd").text(container.Command);
@@ -198,7 +200,6 @@ function createContainer(imageName) {
   });
   $("#new-container-prompt").addClass("hidden");
   $("#new-image-name").val("");
-  location.reload();
 }
 
 

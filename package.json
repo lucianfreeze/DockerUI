@@ -18,6 +18,7 @@
     "devDependencies": {
         "dockerode": "^3.0.1",
         "electron": "^6.0.10",
+        "electron-packager": "^14.0.6",
         "eslint": "^6.4.0",
         "jquery": "^3.4.1"
     },
