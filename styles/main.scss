@@ -1,9 +1,11 @@
 @import 'variables.scss';
+
 @font-face {
     font-family: Coves;
     src: url('./../fonts/CovesLight.otf');
     font-weight: normal;
-  }
+}
+
 body,
 * {
     margin: 0;
@@ -12,12 +14,28 @@ body,
     font-family: 'Coves', sans-serif;
     font-size: 18px;
 }
+
 #add-btn {
     border-radius: 20px;
     border: 2px solid #7f8fa6;
     background-color: #7f8fa6;
     box-shadow: 2px 2px 5px #51697c;
     margin: 25px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    scrollbar-highlight-color: transparent;
+}
+
+#list-header div table {
+    background-color: #7f8fa6;
+    margin-bottom:8px;
+    tr {
+        background-color: #7f8fa6 !important;
+        td {
+            background-color: #7f8fa6;
+        }
+    }
 }
 
 .button {
@@ -30,7 +48,7 @@ body,
 }
 
 .content {
-    margin-top: 50px;
+    margin-top: 5px;
 
     ul li {
         position: relative;
@@ -41,12 +59,14 @@ body,
 
         div {
             margin: 5px 0;
+
             table {
                 width: 100%;
                 table-layout: fixed;
                 box-shadow: 5px 5px 4px #51697c;
                 background-color: white;
                 min-width: 800px;
+
                 tr td {
                     background-color: white;
                     border-right: 1px solid black;
