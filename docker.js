@@ -132,7 +132,7 @@ function containerDestroy(IdName) {
             container.kill(function (err) {
                 container.remove(function (err) {
                     console.log('container removed');
-                });poopoo
+                });
             }); 
         }
         else { container.remove(function (err) {
