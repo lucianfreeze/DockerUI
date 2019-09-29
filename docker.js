@@ -1,0 +1,79 @@
+var Docker = require('dockerode');
+
+var containerList;
+
+var docker = new Docker({
+  host: '127.0.0.1',
+  port: 2375
+});
+
+var item = document.getElementById("item-1").childNodes.childNodes.childNodes;
+
+console.log(item);
+
+function getContainerIds() {
+  docker.listContainers(function (err, containers) {
+      containerList = containers;
+      console.log(containerList);
+  })
+}
+
+//id        = containerList[0].Id       /123eidhf3i2k2h2
+//Name      = containerList[0].Names[0] /Tester1
+//State     = containerList[0].State    /running
+//Status    = containerList[0].Status   /Up 2 minutes
+//Command   = containerList[0].Command  /"/bin/sh"
+//image     = containerList[0].Image    /alpine:lastest
+
+function getContainerName(Idstr) {
+
+}
+
+function getContainerNames() {
+  docker.listContainers(function (err, containers) {
+    containers.forEach(function(err, cntrIdx) {
+      containerList.push(containers[cntrIdx]);
+    })
+  });
+}
+
+function containerStartStop(IdName) {
+  docker.listContainers(function (err, containers) {
+    let container = docker.getContainer(IdName);
+    container.inspect(function (err, data) {
+      console.log(data.State.Status);
+      if (data.State.Running) {
+          container.stop();
+      }
+      else {
+          container.start();
+      }
+    });
+  });
+
+  function containerDestroy(IdName) {
+      let container = docker.getContainer(IdName);
+      container.inspect(function (err, data) {
+          if (data.State.Running) {
+              container.kill();
+          }
+          container.remove();
+          console.log('container removed');
+      })
+      container
+  }
+  /*
+
+  var container = docker.getContainer(conId);
+  console.log(conId);
+  console.log(container);
+  //container.inspect(function (err,data) {
+  //  console.log(data);
+  //});
+  */
+}
+
+function testData() {
+  var test = getContainerIds();
+  containerStartStop(0);
+}
