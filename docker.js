@@ -1,5 +1,5 @@
 var Docker = require('dockerode');
-
+window.$ = window.jQuery = require('jquery');
 var containerList;
 
 var docker = new Docker({
@@ -7,14 +7,36 @@ var docker = new Docker({
   port: 2375
 });
 
-var item = document.getElementById("item-1").childNodes.childNodes.childNodes;
+$(function () {
+  getContainerIds();
+  setTimeout(() => {
+    if (!containerList) {
+      $("body").html("<h1 class='error'>No Containers</h1>");
+    }
+    else {
+      containerList.forEach(function(container){
+        $newItem = $("#list-header").clone().attr("id","item-"+getItemNum());
+        $newItem.find(".id").text(container.Id.slice(0,12));
+        $newItem.find(".name").text(container.Names[0]);
+        $newItem.find(".status").text(container.Status);
+        $newItem.find(".state").text(container.State);
+        $newItem.find(".cmd").text(container.Command);
 
-console.log(item);
+        $("#container-list").append($newItem);
+      })
+    }
+  }, 100);
+
+})
+
+function getItemNum() {
+  return $("#container-list").length;
+}
 
 function getContainerIds() {
-  docker.listContainers(function (err, containers) {
-      containerList = containers;
-      console.log(containerList);
+  docker.listContainers({"all":"true"}, function (err, containers) {
+    containerList = containers;
+    console.log(containerList);
   })
 }
 
@@ -31,7 +53,7 @@ function getContainerName(Idstr) {
 
 function getContainerNames() {
   docker.listContainers(function (err, containers) {
-    containers.forEach(function(err, cntrIdx) {
+    containers.forEach(function (err, cntrIdx) {
       containerList.push(containers[cntrIdx]);
     })
   });
@@ -43,24 +65,23 @@ function containerStartStop(IdName) {
     container.inspect(function (err, data) {
       console.log(data.State.Status);
       if (data.State.Running) {
-          container.stop();
-      }
-      else {
-          container.start();
+        container.stop();
+      } else {
+        container.start();
       }
     });
   });
 
   function containerDestroy(IdName) {
-      let container = docker.getContainer(IdName);
-      container.inspect(function (err, data) {
-          if (data.State.Running) {
-              container.kill();
-          }
-          container.remove();
-          console.log('container removed');
-      })
-      container
+    let container = docker.getContainer(IdName);
+    container.inspect(function (err, data) {
+      if (data.State.Running) {
+        container.kill();
+      }
+      container.remove();
+      console.log('container removed');
+    })
+    container
   }
   /*
 

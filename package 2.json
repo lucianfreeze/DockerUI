@@ -1,0 +1,25 @@
+{
+    "name": "dui",
+    "description": "Docker UI",
+    "version": "1.0.0",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron ."
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "bugs": {},
+    "devDependencies": {
+        "dockerode": "^3.0.1",
+        "electron": "^6.0.10",
+        "eslint": "^6.4.0",
+        "jquery": "^3.4.1"
+    },
+    "dependencies": {}
+}
