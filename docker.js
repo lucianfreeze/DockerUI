@@ -12,7 +12,6 @@ var item = document.getElementById("item-1").childNodes.childNodes.childNodes;
 console.log(item);
 
 function getContainerIds() {
-  var cnts = [];
   docker.listContainers(function (err, containers) {
       containerList = containers;
       console.log(containerList);
